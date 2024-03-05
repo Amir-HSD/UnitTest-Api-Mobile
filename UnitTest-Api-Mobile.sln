@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest-Api-Mobile", "UnitTest-Api-Mobile\UnitTest-Api-Mobile.csproj", "{3FB9BC06-CFD0-40A2-AA1E-F15EC8FA6668}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3FB9BC06-CFD0-40A2-AA1E-F15EC8FA6668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FB9BC06-CFD0-40A2-AA1E-F15EC8FA6668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FB9BC06-CFD0-40A2-AA1E-F15EC8FA6668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FB9BC06-CFD0-40A2-AA1E-F15EC8FA6668}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2499E2F2-084C-47F7-AC9B-B157EC025ADB}
+	EndGlobalSection
+EndGlobal
