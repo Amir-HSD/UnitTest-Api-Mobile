@@ -44,43 +44,58 @@ namespace UnitTest_Api_Mobile
 
                 // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<string,string>();
+
+                // اینیشیالایز کردن کلاس رندوم برای ساخت کد اسکی برای کاراکتر
                 random = new Random();
 
+                // متغیر ولیو برای ولیو های ریگوئست
                 string Value = "";
 
-                int num;
-
+                // حلقه ساخت کلمات رندوم
                 for (int i = 0; i < 10; i++)
                 {
-                    num = random.Next(97, 122);
+                    // ساخت کد اسکی رندوم
+                    int num = random.Next(97, 122);
 
+                    // تبدیل کد اسکی به کاراکتر و اضافه کردن به متغیر مورد نظر
+                    // تبدیل کد اسکی به کاراکتر و اضافه کردن به متغیر مورد نظر
                     Value += Convert.ToChar(num).ToString();
 
                 }
 
+                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"{Value}firstName");
                 dictionary.Add("lastName", $"{Value}lastName");
                 dictionary.Add("email", $"{Value}email.amirhsd.testapi@gmail.com");
                 dictionary.Add("password", $"{Value}password1234");
 
+                // تبدیل کالکشن به جیسون
                 string BodyJson = JsonConvert.SerializeObject(dictionary);
 
+                // ارسال درخواست به ادرس
                 var Response = HC.PostAsync(HC.BaseAddress, new StringContent(BodyJson, Encoding.UTF8, "application/json")).Result;
 
+                
                 if (Response.IsSuccessStatusCode)
                 {
+
+                    // بررسی درستی پاسخ
                     Assert.AreEqual(HttpStatusCode.OK, Response.StatusCode);
 
+                    // خواندن جیسون برگشتی و ریختن آن به داخل کالکشن مورد نظر
                     var ResponseJson = JsonConvert.DeserializeObject<Dictionary<string,string>>(Response.Content.ReadAsStringAsync().Result);
 
                     string Msg;
 
+                    // دریافت مفدار پیغام برگشتی از سمت سرور
                     ResponseJson.TryGetValue("message", out Msg);
 
+                    // چاپ خروجی
                     Console.WriteLine($"StatusCode : {Response.StatusCode} - Content:{Msg}");
                 }
                 else
                 {
+                    // اگر کد برگشتی اوکی نبود فیلد بشود
                     Assert.Fail("Faild",Response.StatusCode);
                 }
 
