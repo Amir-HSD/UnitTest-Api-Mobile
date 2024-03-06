@@ -1,0 +1,157 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Net;
+using System.Net.Http;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using System.Text;
+using System.Threading;
+using System.Windows;
+using System.Runtime.InteropServices;
+
+namespace UnitTest_Api_Mobile
+{
+
+    [TestClass]
+    public class TestRegisterApi
+    {
+        private HttpClient HC;
+
+        private Dictionary<object, object> dictionary;
+
+        private Random random;
+
+        private Dictionary<HttpStatusCode, string> RP;
+
+        [TestInitialize]
+        public void Initialization()
+        {
+            HC = new HttpClient();
+        }
+        [TestCleanup]
+        public void Dispose()
+        {
+            HC.Dispose();
+        }
+
+        public HttpResponseMessage Register(Dictionary<object, object> dic, out Dictionary<object,object> ResponseJson)
+        {
+            // ست کردن ادرس مورد نظر
+            HC.BaseAddress = new Uri("https://mobile-todo-backend.onrender.com/register");
+
+            // تبدیل کالکشن به جیسون
+            string BodyJson = JsonConvert.SerializeObject(dic);
+
+            // ارسال درخواست به ادرس
+            HttpResponseMessage Response = HC.PostAsync(HC.BaseAddress, new StringContent(BodyJson, Encoding.UTF8, "application/json")).Result;
+
+            ResponseJson = JsonConvert.DeserializeObject<Dictionary<object, object>>(Response.Content.ReadAsStringAsync().Result);
+
+            return Response;
+
+        }
+
+        [TestMethod]
+        public async Task CreateAccount()
+        {
+            await Task.Run(async () =>
+            {
+                // ست کردن ادرس مورد نظر
+                HC.BaseAddress = new Uri("https://mobile-todo-backend.onrender.com/register");
+
+                // ساخت کالکشن دیکشنری
+                dictionary = new Dictionary<object,object>();
+
+                // اینیشیالایز کردن کلاس رندوم برای ساخت کد اسکی برای کاراکتر
+                random = new Random();
+
+                // متغیر ولیو برای ولیو های ریگوئست
+                string Value = "";
+
+                // حلقه ساخت کلمات رندوم
+                for (int i = 0; i < 10; i++)
+                {
+                    // ساخت کد اسکی رندوم
+                    int num = random.Next(97, 122);
+
+                    // تبدیل کد اسکی به کاراکتر و اضافه کردن به متغیر مورد نظر
+                    // تبدیل کد اسکی به کاراکتر و اضافه کردن به متغیر مورد نظر
+                    Value += Convert.ToChar(num).ToString();
+
+                }
+
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"{Value}firstName");
+                dictionary.Add("lastName", $"{Value}lastName");
+                dictionary.Add("email", $"{Value}email.amirhsd.testapi@gmail.com");
+                dictionary.Add("password", $"{Value}password1234");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Assert.AreEqual(true, true);
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+        }
+
+        [TestMethod]
+        public async Task ExistAccount()
+        {
+            await Task.Run(async () =>
+            {
+
+                // ساخت کالکشن دیکشنری
+                dictionary = new Dictionary<object, object>();
+
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"amirhsdtestapifirstName");
+                dictionary.Add("lastName", $"amirhsdtestapilastName");
+                dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
+                dictionary.Add("password", $"amirhsdtestapipassword1234");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Assert.AreEqual(true,true);
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+        }
+
+        
+
+    }
+
+}
