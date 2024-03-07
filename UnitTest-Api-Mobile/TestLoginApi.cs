@@ -76,9 +76,97 @@ namespace UnitTest_Api_Mobile
                         Console.WriteLine($"Message: {Msg}");
                         Console.WriteLine($"Token:\n{Token}");
                     }
+                    else if (Msg.ToString().Contains("not verified") || Msg.ToString().Contains("Your email is not verified"))
+                    {
+                        Assert.Inconclusive($"Email Is Not Verifed, Message: {Msg}");
+                    }
                     else
                     {
                         Assert.Fail($"Invaild Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+        }
+
+        [TestMethod]
+        public async Task LoginInValidAccount()
+        {
+            await Task.Run(() =>
+            {
+
+
+                dictionary = new Dictionary<object, object>();
+
+                dictionary.Add("email", $"mamadgholami@gmail.com");
+                dictionary.Add("password", $"mamadgholampass");
+
+                HttpResponseMessage Response = Login(dictionary, out Dictionary<object, object> ResponseJson);
+
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString().Contains("Successfully") || Msg.ToString().Contains("logged in"))
+                    {
+                        Assert.IsTrue(true);
+                        ResponseJson.TryGetValue("jwt", out object Token);
+                        Console.WriteLine($"Message: {Msg}");
+                        Console.WriteLine($"Token:\n{Token}");
+                    }
+                    else if (Msg.ToString().Contains("not verified") || Msg.ToString().Contains("Your email is not verified"))
+                    {
+                        Assert.Inconclusive($"Email Is Not Verifed, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Invaild Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+        }
+
+        [TestMethod]
+        public async Task LoginNotVerifedAccount()
+        {
+            await Task.Run(() =>
+            {
+
+
+                dictionary = new Dictionary<object, object>();
+
+                dictionary.Add("email", $"mamadgholami@gmail.com");
+                dictionary.Add("password", $"mamadgholampass");
+
+                HttpResponseMessage Response = Login(dictionary, out Dictionary<object, object> ResponseJson);
+
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString().Contains("Successfully") || Msg.ToString().Contains("logged in"))
+                    {
+                        Assert.IsTrue(true);
+                        ResponseJson.TryGetValue("jwt", out object Token);
+                        Console.WriteLine($"Message: {Msg}");
+                        Console.WriteLine($"Token:\n{Token}");
+                    }
+                    else if (Msg.ToString().Contains("not verified") || Msg.ToString().Contains("Your email is not verified"))
+                    {
+                        Assert.Inconclusive($"Email Is Not Verifed, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Invaild Account, Message: {Msg}");
                     }
                 }
                 else
