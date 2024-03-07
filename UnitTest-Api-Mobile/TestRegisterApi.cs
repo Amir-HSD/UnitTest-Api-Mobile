@@ -88,6 +88,10 @@ namespace UnitTest_Api_Mobile
                         Assert.AreEqual(true, true);
 
                         Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+
+                        ResponseJson.TryGetValue("createdUser", out object UserInfo);
+
+                        Console.WriteLine($"User Info:\n{UserInfo}");
                     }
                     else
                     {

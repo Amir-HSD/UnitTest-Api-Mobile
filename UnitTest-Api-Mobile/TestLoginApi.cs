@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace UnitTest_Api_Mobile
 {
@@ -19,13 +20,10 @@ namespace UnitTest_Api_Mobile
 
         private Dictionary<HttpStatusCode, string> RP;
 
-        public TestContext TC { get; set; }
-
         [TestInitialize]
         public void Initialization()
         {
             HC = new HttpClient();
-            Console.WriteLine($"TestName: {TC.TestName}");
         }
         [TestCleanup]
         public void Dispose()
@@ -53,19 +51,40 @@ namespace UnitTest_Api_Mobile
 
         }
 
+        [TestMethod]
         public async Task LoginValidAccount()
         {
             await Task.Run(() =>
             {
 
-                // initialization dictionary collection
+                
                 dictionary = new Dictionary<object, object>();
 
-                // اضافه کردم پارامتر ها به کالکشن
-                dictionary.Add("firstName", $"amirhsdtestapifirstName");
-                dictionary.Add("lastName", $"amirhsdtestapilastName");
-                dictionary.Add("email", $"");
-                dictionary.Add("password", $"amirhsdtestapipassword1234");
+                dictionary.Add("email", $"amirhsdtata@gmail.com");
+                dictionary.Add("password", $"Aamirhsdtata123456");
+
+                HttpResponseMessage Response = Login(dictionary, out Dictionary<object, object> ResponseJson);
+
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+                    ResponseJson.TryGetValue("messge", out object Msg);
+
+                    if (Msg.ToString().Contains("Successfully") || Msg.ToString().Contains("logged in"))
+                    {
+                        Assert.IsTrue(true);
+                        ResponseJson.TryGetValue("jwt", out object Token);
+                        Console.WriteLine($"Message: {Msg}");
+                        Console.WriteLine($"Token:\n{Token}");
+                    }
+                    else
+                    {
+                        Assert.Fail($"Invaild Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
 
             });
         }
