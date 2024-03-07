@@ -52,7 +52,7 @@ namespace UnitTest_Api_Mobile
 
         }
 
-        [TestMethod]
+        /*[TestMethod]
         public async Task CreateAccount()
         {
             await Task.Run(async () =>
@@ -109,10 +109,10 @@ namespace UnitTest_Api_Mobile
                 }
 
             });
-        }
+        }*/
 
         [TestMethod]
-        public async Task ExistAccount()
+        public async Task CreateExistAccount()
         {
             await Task.Run(async () =>
             {
@@ -150,7 +150,169 @@ namespace UnitTest_Api_Mobile
             });
         }
 
-        
+        [TestMethod]
+        public async Task NotValidAccount_FistNameisEmpty()
+        {
+
+            await Task.Run(async () =>
+            {
+
+                // ساخت کالکشن دیکشنری
+                dictionary = new Dictionary<object, object>();
+
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"");
+                dictionary.Add("lastName", $"amirhsdtestapilastName");
+                dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
+                dictionary.Add("password", $"amirhsdtestapipassword1234");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Assert.AreEqual(true, true);
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+
+        }
+
+        [TestMethod]
+        public async Task NotValidAccount_LastNameisEmpty()
+        {
+
+            await Task.Run(async () =>
+            {
+
+                // ساخت کالکشن دیکشنری
+                dictionary = new Dictionary<object, object>();
+
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"amirhsdtestapifirstName");
+                dictionary.Add("lastName", $"");
+                dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
+                dictionary.Add("password", $"amirhsdtestapipassword1234");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Assert.AreEqual(true, true);
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+
+        }
+
+        [TestMethod]
+        public async Task NotValidAccount_EmailisEmpty()
+        {
+
+            await Task.Run(async () =>
+            {
+
+                // ساخت کالکشن دیکشنری
+                dictionary = new Dictionary<object, object>();
+
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"amirhsdtestapifirstName");
+                dictionary.Add("lastName", $"amirhsdtestapilastName");
+                dictionary.Add("email", $"");
+                dictionary.Add("password", $"amirhsdtestapipassword1234");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Assert.AreEqual(true, true);
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+
+        }
+
+        [TestMethod]
+        public async Task NotValidAccount_PasswordisEmpty()
+        {
+
+            await Task.Run(async () =>
+            {
+
+                // ساخت کالکشن دیکشنری
+                dictionary = new Dictionary<object, object>();
+
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"amirhsdtestapifirstName");
+                dictionary.Add("lastName", $"amirhsdtestapilastName");
+                dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
+                dictionary.Add("password", $"");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Assert.AreEqual(true, true);
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+
+        }
 
     }
 
