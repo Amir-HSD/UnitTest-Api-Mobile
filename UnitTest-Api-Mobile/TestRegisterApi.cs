@@ -28,6 +28,7 @@ namespace UnitTest_Api_Mobile
         public void Initialization()
         {
             HC = new HttpClient();
+            
         }
         [TestCleanup]
         public void Dispose()
@@ -52,7 +53,7 @@ namespace UnitTest_Api_Mobile
 
         }
 
-        /*[TestMethod]
+        [TestMethod]
         public async Task CreateAccount()
         {
             await Task.Run(async () =>
@@ -97,6 +98,11 @@ namespace UnitTest_Api_Mobile
                     {
                         Assert.AreEqual(true, true);
                         Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+
+                        ResponseJson.TryGetValue("createdUser", out object UserInfo);
+
+                        Console.WriteLine($"User Info: {UserInfo}");
+
                     }
                     else
                     {
@@ -109,7 +115,7 @@ namespace UnitTest_Api_Mobile
                 }
 
             });
-        }*/
+        }
 
         [TestMethod]
         public async Task CreateExistAccount()
@@ -135,6 +141,7 @@ namespace UnitTest_Api_Mobile
                     if (Msg.ToString() == "User creation successful")
                     {
                         Assert.AreEqual(true,true);
+                        
                         Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
                     }
                     else
