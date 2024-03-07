@@ -58,9 +58,6 @@ namespace UnitTest_Api_Mobile
         {
             await Task.Run(async () =>
             {
-                // ست کردن ادرس مورد نظر
-                HC.BaseAddress = new Uri("https://mobile-todo-backend.onrender.com/register");
-
                 // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object,object>();
 
@@ -97,12 +94,8 @@ namespace UnitTest_Api_Mobile
                     if (Msg.ToString() == "User creation successful")
                     {
                         Assert.AreEqual(true, true);
+
                         Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
-
-                        ResponseJson.TryGetValue("createdUser", out object UserInfo);
-
-                        Console.WriteLine($"User Info: {UserInfo}");
-
                     }
                     else
                     {
