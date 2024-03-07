@@ -58,28 +58,20 @@ namespace UnitTest_Api_Mobile
         {
             await Task.Run(async () =>
             {
-                // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object,object>();
 
-                // اینیشیالایز کردن کلاس رندوم برای ساخت کد اسکی برای کاراکتر
                 random = new Random();
 
-                // متغیر ولیو برای ولیو های ریگوئست
                 string Value = "";
 
-                // حلقه ساخت کلمات رندوم
                 for (int i = 0; i < 10; i++)
                 {
-                    // ساخت کد اسکی رندوم
                     int num = random.Next(97, 122);
 
-                    // تبدیل کد اسکی به کاراکتر و اضافه کردن به متغیر مورد نظر
-                    // تبدیل کد اسکی به کاراکتر و اضافه کردن به متغیر مورد نظر
                     Value += Convert.ToChar(num).ToString();
 
                 }
 
-                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"{Value}firstName");
                 dictionary.Add("lastName", $"{Value}lastName");
                 dictionary.Add("email", $"{Value}email.amirhsd.testapi@gmail.com");
@@ -116,10 +108,8 @@ namespace UnitTest_Api_Mobile
             await Task.Run(async () =>
             {
 
-                // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object, object>();
 
-                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"amirhsdtestapifirstName");
                 dictionary.Add("lastName", $"amirhsdtestapilastName");
                 dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
@@ -157,10 +147,8 @@ namespace UnitTest_Api_Mobile
             await Task.Run(async () =>
             {
 
-                // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object, object>();
 
-                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"");
                 dictionary.Add("lastName", $"amirhsdtestapilastName");
                 dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
@@ -197,11 +185,8 @@ namespace UnitTest_Api_Mobile
 
             await Task.Run(async () =>
             {
-
-                // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object, object>();
 
-                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"amirhsdtestapifirstName");
                 dictionary.Add("lastName", $"");
                 dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");
@@ -210,7 +195,6 @@ namespace UnitTest_Api_Mobile
                 HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
                 if (Response.StatusCode == HttpStatusCode.OK)
                 {
-
                     ResponseJson.TryGetValue("message", out object Msg);
 
                     if (Msg.ToString() == "User creation successful")
@@ -239,15 +223,14 @@ namespace UnitTest_Api_Mobile
             await Task.Run(async () =>
             {
 
-                // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object, object>();
 
-                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"amirhsdtestapifirstName");
                 dictionary.Add("lastName", $"amirhsdtestapilastName");
                 dictionary.Add("email", $"");
                 dictionary.Add("password", $"amirhsdtestapipassword1234");
 
+                // Get response from api
                 HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
                 if (Response.StatusCode == HttpStatusCode.OK)
                 {
@@ -280,10 +263,8 @@ namespace UnitTest_Api_Mobile
             await Task.Run(async () =>
             {
 
-                // ساخت کالکشن دیکشنری
                 dictionary = new Dictionary<object, object>();
 
-                // اضافه کردم پارامتر ها به کالکشن
                 dictionary.Add("firstName", $"amirhsdtestapifirstName");
                 dictionary.Add("lastName", $"amirhsdtestapilastName");
                 dictionary.Add("email", $"amirhsdtestapi.amirhsd.testapi@gmail.com");

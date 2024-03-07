@@ -58,7 +58,14 @@ namespace UnitTest_Api_Mobile
             await Task.Run(() =>
             {
 
+                // initialization dictionary collection
+                dictionary = new Dictionary<object, object>();
 
+                // اضافه کردم پارامتر ها به کالکشن
+                dictionary.Add("firstName", $"amirhsdtestapifirstName");
+                dictionary.Add("lastName", $"amirhsdtestapilastName");
+                dictionary.Add("email", $"");
+                dictionary.Add("password", $"amirhsdtestapipassword1234");
 
             });
         }
