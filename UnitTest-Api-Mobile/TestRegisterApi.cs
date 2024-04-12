@@ -107,6 +107,86 @@ namespace UnitTest_Api_Mobile
         }
 
         [TestMethod]
+        public async Task VerifyAccount()
+        {
+            await Task.Run(async () =>
+            {
+                dictionary = new Dictionary<object, object>();
+
+                random = new Random();
+
+                string Value = "";
+
+                for (int i = 0; i < 10; i++)
+                {
+                    int num = random.Next(97, 122);
+
+                    Value += Convert.ToChar(num).ToString();
+
+                }
+
+                dictionary.Add("firstName", $"{Value}firstName");
+                dictionary.Add("lastName", $"{Value}lastName");
+                dictionary.Add("email", $"{Value}email.amirhsd.testapi@gmail.com");
+                dictionary.Add("password", $"{Value}password1234");
+
+                HttpResponseMessage Response = Register(dictionary, out Dictionary<object, object> ResponseJson);
+                if (Response.StatusCode == HttpStatusCode.OK)
+                {
+
+                    ResponseJson.TryGetValue("message", out object Msg);
+
+                    if (Msg.ToString() == "User creation successful")
+                    {
+                        Console.WriteLine($"Successfully To Register Account\nStatusCode: {Response.StatusCode}, Message: {Msg}");
+
+                        ResponseJson.TryGetValue("createdUser", out object createdUser);
+
+                        Dictionary<object, object> UserInfo = new Dictionary<object, object>();
+                        UserInfo = JsonConvert.DeserializeObject<Dictionary<object, object>>(createdUser.ToString());
+
+                        UserInfo.TryGetValue("verificationKey", out object verificationKey);
+
+                        HttpResponseMessage VerficationMessage = await HC.GetAsync(new Uri($"https://mobile-todo-backend.onrender.com/verify-email/{verificationKey}"));
+
+                        if (VerficationMessage.IsSuccessStatusCode)
+                        {
+                            Console.WriteLine("Successfully Verified");
+                            Console.WriteLine(VerficationMessage.Content.ReadAsStringAsync().Result);
+                            if (VerficationMessage.Content.ReadAsStringAsync().Result.Contains("successfully") || VerficationMessage.Content.ReadAsStringAsync().Result.Contains("verified"))
+                            {
+                                Assert.IsTrue(true);
+                            }
+                            else
+                            {
+                                Assert.Fail($"Faild To Verfication Account Result: {VerficationMessage.Content.ReadAsStringAsync().Result}");
+                            }
+
+
+                        }
+                        else
+                        {
+                            Assert.Fail("Faild To Verfication Account");
+                        }
+
+                        
+
+                        
+                    }
+                    else
+                    {
+                        Assert.Inconclusive($"Faild To Register Account, Message: {Msg}");
+                    }
+                }
+                else
+                {
+                    Assert.Fail("Faild");
+                }
+
+            });
+        }
+
+        [TestMethod]
         public async Task CreateExistAccount()
         {
             await Task.Run(async () =>

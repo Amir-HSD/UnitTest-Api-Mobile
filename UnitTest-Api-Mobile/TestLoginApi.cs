@@ -67,7 +67,7 @@ namespace UnitTest_Api_Mobile
 
                 if (Response.StatusCode == HttpStatusCode.OK)
                 {
-                    ResponseJson.TryGetValue("messge", out object Msg);
+                    ResponseJson.TryGetValue("message", out object Msg);
 
                     if (Msg.ToString().Contains("Successfully") || Msg.ToString().Contains("logged in"))
                     {
@@ -176,6 +176,8 @@ namespace UnitTest_Api_Mobile
 
             });
         }
+
+        
 
     }
 }
