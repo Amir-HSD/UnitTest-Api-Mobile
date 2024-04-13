@@ -57,6 +57,7 @@
     <Compile Include="TestLoginApi.cs" />
     <Compile Include="TestRegisterApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TestTodoApi.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

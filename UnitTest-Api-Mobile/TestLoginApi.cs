@@ -226,16 +226,12 @@ namespace UnitTest_Api_Mobile
                         Assert.Fail($"Faild To Reset Password Message: {ResetMessage}");
                     }
 
-                    
 
                 }
                 else
                 {
                     Assert.Fail("Faild To Forget Password");
                 }
-
-                
-
                 
 
             });
