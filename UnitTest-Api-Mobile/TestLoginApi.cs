@@ -177,7 +177,68 @@ namespace UnitTest_Api_Mobile
             });
         }
 
-        
+        [TestMethod]
+        public async Task ForgetAndResetPassword()
+        {
+            await Task.Run(async () =>
+            {
 
+                Dictionary<object,object> Body = new Dictionary<object,object>();
+
+                Body.Add("email", "amirhsdtata@gmail.com");
+
+                var BodyJsonForget = JsonConvert.SerializeObject(Body);
+
+                var RequestToForget = new HttpRequestMessage(new HttpMethod("PATCH"), "https://mobile-todo-backend.onrender.com/forget-password") { Content = new StringContent(BodyJsonForget, Encoding.UTF8, "application/json") };
+
+                HttpResponseMessage ResponseForget = await HC.SendAsync(RequestToForget);
+
+                Console.WriteLine(ResponseForget.Content.ReadAsStringAsync().Result);
+
+                var GetResult = JsonConvert.DeserializeObject<Dictionary<object,object>>(ResponseForget.Content.ReadAsStringAsync().Result);
+
+                GetResult.TryGetValue("message", out var Message);
+
+                if (Message.ToString().Contains("Successfully"))
+                {
+                    GetResult.TryGetValue("OTP", out var OTP);
+
+                    Body.Add("OTP", OTP);
+                    Body.Add("newPassword", "Aamirhsdtata123456");
+
+                    var BodyJsonReset = JsonConvert.SerializeObject(Body);
+
+                    var RequestToReset = new HttpRequestMessage(new HttpMethod("PATCH"), "https://mobile-todo-backend.onrender.com/reset-password") { Content= new StringContent(BodyJsonReset, Encoding.UTF8, "application/json") };
+
+                    HttpResponseMessage ResponseReset = await HC.SendAsync(RequestToReset);
+
+                    var GetResetResult = JsonConvert.DeserializeObject<Dictionary<object, object>>(ResponseReset.Content.ReadAsStringAsync().Result);
+
+                    GetResetResult.TryGetValue("message", out var ResetMessage);
+
+                    if (ResetMessage.ToString().Contains("successfully"))
+                    {
+                        Console.WriteLine("Successfully To Reset Password");
+                        Assert.IsTrue(true);
+                    }
+                    else
+                    {
+                        Assert.Fail($"Faild To Reset Password Message: {ResetMessage}");
+                    }
+
+                    
+
+                }
+                else
+                {
+                    Assert.Fail("Faild To Forget Password");
+                }
+
+                
+
+                
+
+            });
+        }
     }
 }
