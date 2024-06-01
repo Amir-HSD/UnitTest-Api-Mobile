@@ -30,9 +30,6 @@ namespace UnitTest_Api_Mobile
         {
             HC.Dispose();
         }
-
-        
-
         
         public HttpResponseMessage Login(Dictionary<object, object> dic, out Dictionary<object, object> ResponseJson)
         {
@@ -56,18 +53,18 @@ namespace UnitTest_Api_Mobile
         {
             await Task.Run(() =>
             {
-
                 
                 dictionary = new Dictionary<object, object>();
 
-                dictionary.Add("email", $"amirhsdtata@gmail.com");
-                dictionary.Add("password", $"Aamirhsdtata123456");
+                dictionary.Add("email", $"amirhossein@gmail.com");
+                dictionary.Add("password", $"amirhossein1234");
 
                 HttpResponseMessage Response = Login(dictionary, out Dictionary<object, object> ResponseJson);
 
                 if (Response.StatusCode == HttpStatusCode.OK)
                 {
-                    ResponseJson.TryGetValue("message", out object Msg);
+                    ResponseJson.TryGetValue("messge", out object Msg);
+                    Console.WriteLine(Msg);
 
                     if (Msg.ToString().Contains("Successfully") || Msg.ToString().Contains("logged in"))
                     {
@@ -185,7 +182,7 @@ namespace UnitTest_Api_Mobile
 
                 Dictionary<object,object> Body = new Dictionary<object,object>();
 
-                Body.Add("email", "amirhsdtata@gmail.com");
+                Body.Add("email", "egkxyaixwiemail.amirhsd.testapi@gmail.com");
 
                 var BodyJsonForget = JsonConvert.SerializeObject(Body);
 
